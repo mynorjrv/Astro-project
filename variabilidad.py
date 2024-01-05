@@ -9,21 +9,27 @@ pks1 = '08_PKS1424+240_results.dat'
 
 fuente = markarian
 
-indata = np.genfromtxt( fuente,
-                     skip_header=1,
-                     usecols=(0, 1, 2, 3),
-                     dtype=[('x', float),
-                            ('xerr', float),
-                            ('y', float),
-                            ('yerr', float),],
-                     comments='#')
+indata = np.genfromtxt( 
+  fuente,               
+  skip_header=1,       
+  usecols=(0, 1, 2, 3),      
+  dtype=[('x', float),       
+         ('xerr', float),        
+         ('y', float),       
+         ('yerr', float),
+        ],    
+  comments='#'
+)
 
 
-data = np.array([(0,0,0,0)], 
-                dtype=[('x', float),
-                       ('xerr', float),
-                       ('y', float),
-                       ('yerr', float),])
+data = np.array(
+  [(0,0,0,0)], 
+  dtype=[('x', float),
+         ('xerr', float),
+         ('y', float),
+         ('yerr', float),
+        ]
+)
 
 for i in range( len(indata) ):
     if( indata[i]['yerr'] == 0.0 ):
@@ -54,7 +60,7 @@ S_square = (1/(N-1))*S_square
 
 sigma_err = 0
 for i in range( N ):
-    sigma_err += ( (data[i][fluxerr])**2)
+    sigma_err += ( (data[i][fluxerr])**2 )
 sigma_err = (1/N)*sigma_err
 
 #error sistematico
@@ -62,7 +68,10 @@ sigma_err = (1/N)*sigma_err
 
 F_var = math.sqrt( (S_square - sigma_err)/ Xaverage**2 )
 
-F_var_err = math.sqrt( ( (math.sqrt(1/(2*N)))*(sigma_err/( (Xaverage**2)*F_var )) )**2 + ( (math.sqrt( sigma_err/N ))*(1/Xaverage) )**2 )
+F_var_err = math.sqrt( 
+  ( math.sqrt(1/(2*N)) * ( sigma_err/(F_var*(Xaverage**2)) ) )**2 
+  + ( math.sqrt(sigma_err/N) * (1/Xaverage) )**2 
+)
 
 #Dude de mi ecuacion pero way more ordenado
 '''A = math.sqrt(1/(2*N))
