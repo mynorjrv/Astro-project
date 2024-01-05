@@ -11,23 +11,28 @@ import matplotlib.pyplot as PL
 # 07_PKS0447-439_results.dat
 # 08_PKS1424+240_results.dat
 
-indata = np.genfromtxt('08_PKS1424+240_results.dat',
-                     skip_header=1,
-                     usecols=(0, 1, 2, 3),
-                     dtype=[('x', float),
-                            ('xerr', float),
-                            ('y', float),
-                            ('yerr', float),],
-                     comments='#')
-
+indata = np.genfromtxt(
+  '08_PKS1424+240_results.dat',
+  skip_header=1,
+  usecols=(0, 1, 2, 3),
+  dtype=[('x', float),                   
+         ('xerr', float), 
+         ('y', float),
+         ('yerr', float),
+        ],
+  comments='#'
+)
 
 #elimino los elementos con error cero, creo una nueva lista
 #mas dificil de lo que deberia
-data = np.array([(0,0,0,0)], 
-                dtype=[('x', float),
-                       ('xerr', float),
-                       ('y', float),
-                       ('yerr', float),])
+data = np.array(
+  [(0,0,0,0)], 
+  dtype=[('x', float),
+         ('xerr', float),
+         ('y', float),
+         ('yerr', float),
+        ]
+)
 
 for i in range( len(indata) ):
     if( indata[i]['yerr'] == 0.0 ):
@@ -38,14 +43,14 @@ for i in range( len(indata) ):
 
 data = np.delete(data, 0)
 
-
-
 #* * * plotting * * * 
 fig, ax = PL.subplots(1)
 
-
 #Data plot with errors
-PL.errorbar(data['x'], data['y'], xerr=data['xerr'], yerr=data['yerr'], fmt='none', color='black', label='Mkn421', capsize=2.0)
+PL.errorbar(
+  data['x'], data['y'], 
+  xerr=data['xerr'], yerr=data['yerr'], 
+  fmt='none', color='black', label='Mkn421', capsize=2.0)
 #fmt="+",
 
 
